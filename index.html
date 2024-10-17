@@ -17,11 +17,25 @@
         <label for="techName">Technician Name:</label>
         <input type="text" id="techName" required>
 
+        <label for="jobNumber">Job/Project Number:</label>
+        <input type="text" id="jobNumber" placeholder="Enter job number">
+
+        <label for="serviceType">Service Type:</label>
+        <select id="serviceType" required>
+            <option value="">Select Service Type</option>
+            <option value="installation">Installation</option>
+            <option value="maintenance">Maintenance</option>
+            <option value="repair">Repair</option>
+        </select>
+
         <label for="startTime">Start Time (Military Time):</label>
         <input type="time" id="startTime" required>
 
         <label for="endTime">End Time (Military Time):</label>
         <input type="time" id="endTime" required>
+
+        <label for="duration">Duration (Auto-calculated):</label>
+        <input type="text" id="duration" readonly>
 
         <label for="kmStart">KM Start:</label>
         <input type="number" id="kmStart" required>
@@ -49,25 +63,48 @@
         <label for="newEquipment">Add New Equipment:</label>
         <input type="text" id="newEquipment" placeholder="Enter new equipment name">
 
+        <label for="partsUsed">Parts Used:</label>
+        <textarea id="partsUsed" rows="4" placeholder="List of parts used"></textarea>
+
+        <label for="customerFeedback">Customer Feedback:</label>
+        <textarea id="customerFeedback" rows="2" placeholder="Feedback or rating"></textarea>
+
         <button type="submit">Submit Log</button>
     </form>
 
     <script>
+        // Function to calculate the duration between start and end times
+        function calculateDuration(startTime, endTime) {
+            const start = new Date(`1970-01-01T${startTime}:00`);
+            const end = new Date(`1970-01-01T${endTime}:00`);
+            const duration = (end - start) / 1000 / 60; // Duration in minutes
+            return `${Math.floor(duration / 60)}h ${duration % 60}m`;
+        }
+
         document.getElementById('logForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
             // Gather form data
+            const startTime = document.getElementById('startTime').value;
+            const endTime = document.getElementById('endTime').value;
+            const duration = calculateDuration(startTime, endTime);
+
             const formData = {
                 techName: document.getElementById('techName').value,
-                startTime: document.getElementById('startTime').value,
-                endTime: document.getElementById('endTime').value,
+                jobNumber: document.getElementById('jobNumber').value,
+                serviceType: document.getElementById('serviceType').value,
+                startTime: startTime,
+                endTime: endTime,
+                duration: duration,
                 kmStart: document.getElementById('kmStart').value,
                 kmEnd: document.getElementById('kmEnd').value,
                 notes: document.getElementById('notes').value,
                 address: document.getElementById('address').value,
                 photos: Array.from(document.getElementById('photos').files).map(file => file.name),
                 equipmentUsed: document.getElementById('equipmentUsed').value,
-                newEquipment: document.getElementById('newEquipment').value
+                newEquipment: document.getElementById('newEquipment').value,
+                partsUsed: document.getElementById('partsUsed').value,
+                customerFeedback: document.getElementById('customerFeedback').value
             };
 
             // Send form data to Google Apps Script
