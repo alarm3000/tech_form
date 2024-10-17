@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technician Log</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        form { max-width: 600px; margin: auto; }
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0; }
+        button { padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Technician Log</h1>
+    <form id="logForm">
+        <label for="techName">Technician Name:</label>
+        <input type="text" id="techName" required>
+
+        <label for="startTime">Start Time (Military Time):</label>
+        <input type="time" id="startTime" required>
+
+        <label for="endTime">End Time (Military Time):</label>
+        <input type="time" id="endTime" required>
+
+        <label for="kmStart">KM Start:</label>
+        <input type="number" id="kmStart" required>
+
+        <label for="kmEnd">KM End:</label>
+        <input type="number" id="kmEnd" required>
+
+        <label for="notes">Notes:</label>
+        <textarea id="notes" rows="4"></textarea>
+
+        <label for="address">Address/Coordinates:</label>
+        <input type="text" id="address" placeholder="Address or Coordinates" required>
+
+        <label for="photos">Upload Photos:</label>
+        <input type="file" id="photos" multiple accept="image/*">
+
+        <button type="submit">Submit Log</button>
+    </form>
+
+    <script>
+        document.getElementById('logForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Gather form data
+            const formData = {
+                techName: document.getElementById('techName').value,
+                startTime: document.getElementById('startTime').value,
+                endTime: document.getElementById('endTime').value,
+                kmStart: document.getElementById('kmStart').value,
+                kmEnd: document.getElementById('kmEnd').value,
+                notes: document.getElementById('notes').value,
+                address: document.getElementById('address').value,
+                photos: Array.from(document.getElementById('photos').files).map(file => file.name)
+            };
+
+            // Send form data to Google Apps Script (you will set this up in the next step)
+            fetch('YOUR_GOOGLE_APPS_SCRIPT_URL', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Log submitted successfully!');
+                    this.reset();
+                } else {
+                    alert('Failed to submit log.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
