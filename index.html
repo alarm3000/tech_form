@@ -7,7 +7,7 @@
     <style>
         body { font-family: Arial, sans-serif; }
         form { max-width: 600px; margin: auto; }
-        input, textarea { width: 100%; padding: 10px; margin: 10px 0; }
+        input, textarea, select { width: 100%; padding: 10px; margin: 10px 0; }
         button { padding: 10px; }
     </style>
 </head>
@@ -38,6 +38,17 @@
         <label for="photos">Upload Photos:</label>
         <input type="file" id="photos" multiple accept="image/*">
 
+        <label for="equipmentUsed">Equipment Used:</label>
+        <select id="equipmentUsed" required>
+            <option value="">Select Equipment Status</option>
+            <option value="complete">Complete</option>
+            <option value="incomplete">Incomplete</option>
+            <option value="return">Return</option>
+        </select>
+
+        <label for="newEquipment">Add New Equipment:</label>
+        <input type="text" id="newEquipment" placeholder="Enter new equipment name">
+
         <button type="submit">Submit Log</button>
     </form>
 
@@ -54,10 +65,12 @@
                 kmEnd: document.getElementById('kmEnd').value,
                 notes: document.getElementById('notes').value,
                 address: document.getElementById('address').value,
-                photos: Array.from(document.getElementById('photos').files).map(file => file.name)
+                photos: Array.from(document.getElementById('photos').files).map(file => file.name),
+                equipmentUsed: document.getElementById('equipmentUsed').value,
+                newEquipment: document.getElementById('newEquipment').value
             };
 
-            // Send form data to Google Apps Script (you will set this up in the next step)
+            // Send form data to Google Apps Script
             fetch('YOUR_GOOGLE_APPS_SCRIPT_URL', {
                 method: 'POST',
                 headers: {
