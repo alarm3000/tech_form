@@ -6,6 +6,9 @@
 <body>
     <h1>Technician Report</h1>
     <form id="reportForm">
+        <label for="workOrderNumber">Work Order Number:</label>
+        <input type="text" id="workOrderNumber" readonly><br><br>
+
         <label for="startTime">Start Time (Military Time):</label>
         <input type="text" id="startTime" required><br><br>
 
@@ -45,9 +48,13 @@
             return `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}`;
         }
 
+        function displayWorkOrderNumber() {
+            document.getElementById("workOrderNumber").value = generateWorkOrderNumber();
+        }
+
         function submitForm() {
             const formData = {
-                workOrderNumber: generateWorkOrderNumber(),
+                workOrderNumber: document.getElementById("workOrderNumber").value,
                 startTime: document.getElementById("startTime").value,
                 endTime: document.getElementById("endTime").value,
                 kmStart: document.getElementById("kmStart").value,
@@ -70,6 +77,7 @@
                 if (response.ok) {
                     alert('Report submitted successfully!');
                     document.getElementById("reportForm").reset(); // Reset the form after submission
+                    displayWorkOrderNumber(); // Regenerate work order number for the next submission
                 } else {
                     alert('Error submitting the report. Please try again.');
                 }
@@ -79,6 +87,9 @@
                 alert('An error occurred. Please try again later.');
             });
         }
+
+        // Initialize work order number on page load
+        window.onload = displayWorkOrderNumber;
     </script>
 </body>
 </html>
