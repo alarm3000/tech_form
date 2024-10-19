@@ -4,34 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Technician Report</title>
+    <style>
+        /* Basic styling for better appearance */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            max-width: 500px;
+        }
+        label {
+            margin-top: 10px;
+            display: block;
+        }
+        input[type="text"], input[type="number"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px;
+            margin-top: 5px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <h1>Technician Report</h1>
     <form id="reportForm">
         <label for="workOrderNumber">Work Order Number:</label>
-        <input type="text" id="workOrderNumber" readonly><br><br>
+        <input type="text" id="workOrderNumber" readonly><br>
 
         <label for="workStartTime">Work Start Time:</label>
-        <input type="text" id="workStartTime" required readonly>
-        <button type="button" onclick="selectTime('workStartTime')">Select Time</button><br><br>
+        <input type="text" id="workStartTime" required>
+        <button type="button" onclick="selectTime('workStartTime')">Select Time</button><br>
 
         <label for="workEndTime">Work End Time:</label>
-        <input type="text" id="workEndTime" required readonly>
-        <button type="button" onclick="selectTime('workEndTime')">Select Time</button><br><br>
+        <input type="text" id="workEndTime" required>
+        <button type="button" onclick="selectTime('workEndTime')">Select Time</button><br>
 
         <label for="travelStartTime">Travel Start Time:</label>
-        <input type="text" id="travelStartTime" required readonly>
-        <button type="button" onclick="selectTime('travelStartTime')">Select Time</button><br><br>
+        <input type="text" id="travelStartTime" required>
+        <button type="button" onclick="selectTime('travelStartTime')">Select Time</button><br>
 
         <label for="travelEndTime">Travel End Time:</label>
-        <input type="text" id="travelEndTime" required readonly>
-        <button type="button" onclick="selectTime('travelEndTime')">Select Time</button><br><br>
+        <input type="text" id="travelEndTime" required>
+        <button type="button" onclick="selectTime('travelEndTime')">Select Time</button><br>
 
         <label for="kmStart">KM Start:</label>
-        <input type="number" id="kmStart" required><br><br>
+        <input type="number" id="kmStart" required><br>
 
         <label for="kmEnd">KM End:</label>
-        <input type="number" id="kmEnd" required><br><br>
+        <input type="number" id="kmEnd" required><br>
 
         <button type="submit">Submit Report</button>
     </form>
